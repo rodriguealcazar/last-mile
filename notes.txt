@@ -71,13 +71,6 @@ People
 Remediation over rolling back
 
 
-= Value Proposition
-
-1. Quicker feedback on product
-2. Delivery process that massively reduces the risk
-
-3. Real sense of progress and meaning of done
-
 == Pillars
 
 1. Configuration management
