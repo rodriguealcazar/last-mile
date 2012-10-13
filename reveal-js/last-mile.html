@@ -1,0 +1,397 @@
+<!doctype html>
+<html lang="en">
+
+	<head>
+		<meta charset="utf-8">
+
+		<title>The Last Mile - Continuous Delivery</title>
+
+		<meta name="description"
+              content="An introduction to the tenets of Continuous Delivery">
+		<meta name="author" content="Rodrigue Alcazar">
+
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+		<link href='http://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+
+		<link rel="stylesheet" href="css/reveal.css">
+		<link rel="stylesheet" href="css/theme/serif.css" id="theme">
+        <link rel="stylesheet" href="css/style.css">
+
+		<!-- For syntax highlighting -->
+		<link rel="stylesheet" href="lib/css/zenburn.css">
+
+		<!-- If the query includes 'print-pdf', use the PDF print sheet -->
+		<script>
+			document.write( '<link rel="stylesheet" href="css/print/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );
+		</script>
+
+		<!--[if lt IE 9]>
+		<script src="lib/js/html5shiv.js"></script>
+		<![endif]-->
+	</head>
+
+	<body>
+
+		<div class="reveal">
+
+			<div class="slides">
+
+				<section>
+					<h1>The Last Mile</h1>
+					<h3>Continuous Delivery</h3>
+
+                    <p class="footer">PyCon Ireland<br/>Dublin, 13th Oct. 2012</p>
+				</section>
+
+				<section>
+					<h2>Rodrigue Alcazar</h2>
+					<p class="loose">Software Developer at <a href="http://sumup.com">SumUp</a></p>
+                    <p class="loose">Open-source, Agile, DevOps enthusiast!</p>
+                    <p class="reference">
+                        <img class="email" src="img/email.png"/></p>
+				</section>
+
+                <section>
+                    <h3>
+                    Continuous Delivery
+                        <span class="comment">Reliable Software Releases
+                        through Build, Test, and Deployment
+                            Automation</span></h3>
+                    <p><span  class="comment">Jez Humble & David
+                            Farley, 2010</span></p>
+                        <img src="img/CD-book.png"/>
+                </section>
+
+				<section>
+					<h2>Agenda</h2>
+                    <ul class="simple">
+                        <li class="fragment">Background</li>
+                        <li class="fragment">Internals</li>
+                        <li class="fragment">Benefits</li>
+                        <li class="fragment">Challenges</li>
+                        <li class="fragment">Where to start</li>
+                        <li class="fragment">Tools</li>
+                        <li class="fragment">Conclusion</li>
+                    </ul>
+				</section>
+
+				<section>
+					<h2>Background</h2>
+                </section>
+
+                <section>
+					<h3>Agile</h3>
+
+                    <p class="fragment">Design and write in small batches
+                       <span class="fragment comment">Good for the product and developers</span>
+                    </p>
+                    <p class="fragment">Early & Constant Feedback</p>
+				</section>
+
+                <section>
+                    <section>
+                        <h3>Lean</h3>
+                        <p class="fragment">How long would it take you to deploy a
+                            change that involves just one single line of code?</p>
+
+                        <p class="fragment">
+                            <span class="comment">Deliver as fast as
+                                possible</span>
+                        </p>
+                        <p class="fragment reference">Lean Software Development: An
+                            Agile
+                            Toolkit<br/>Mary & Tom Poppendieck, 2003</p>
+                    </section>
+
+                    <section>
+                        <h3>Value Stream Mapping</h3>
+                        <p class="fragment">
+                            <img class="fragment" src="img/vsm.gif" width="750"
+                            height="195"/>
+                        </p>
+                        <p class="fragment reference">
+                            http://www.informit.com/articles/article.aspx?p=1621865
+                        </p>
+                    </section>
+
+                    <section>
+                        <h3>Reduce</h3>
+                        <ul class="simple">
+                            <li class="fragment">Cycle time</li>
+                            <li class="fragment">Waste</li>
+                            <li class="fragment">Bottlenecks</li>
+                        </ul>
+                    </section>
+                </section>
+                <section>
+                    <h3>Limits</h3>
+                    <p class="fragment agile">Stakeholder</p>
+                    <p class="fragment agile">Implementation
+                        <span class="comment">(Dev)</span></p>
+                    <p class="fragment semi-agile">QA</p>
+                    <p class="fragment not-agile">Release
+                        <span class="comment">(Ops)</span></p>
+                </section>
+
+                <section>
+                    <h3>Deployments anti-patterns</h3>
+                    <p class="fragment">Deploying manually</p>
+                    <p class="fragment">Stagging as first realistic environment</p>
+                    <p class="fragment">Manual configuration management of
+                        production</p>
+                </section>
+
+				<section>
+                    <h3>The Last Mile</h3>
+                    <p class="fragment">
+                        Design and write <span class="added">and
+                        deploy </span>in small batches
+                       <span class="fragment comment">
+                           Good for the product and developers
+                           <span class="added">and operations</span>
+                       </span>
+                    </p>
+                    <p class="fragment">Software is always in a releasable
+                        state</p>
+                    <p></p>
+				</section>
+
+                <section>
+                    <h2>Internals</h2>
+                </section>
+
+                <section>
+                    <h3>Pillars</h3>
+                    <ul class="simple">
+                        <li class="fragment">Configuration Management</li>
+                        <li class="fragment">Agile Testing</li>
+                        <li class="fragment">Deployment pipeline</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h3>Principles</h3>
+                    <ul class="simple">
+                        <li class="fragment">Repeatable and reliable release
+                            process</li>
+                        <li class="fragment">Automate almost everything</li>
+                        <li class="fragment">If it hurts, do it more frequently</li>
+                        <li class="fragment">Build quality in</li>
+                        <li class="fragment">Done means released</li>
+                        <li class="fragment">Everybody responsible for the delivery process</li>
+                        <li class="fragment">Continuous improvement</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <section>
+                        <h3>Deployment Pipeline</h3>
+                        <p class="fragment">
+                            <img src="img/pipeline.resized.jpg"></p>
+                        <p class="reference fragment">
+                        http://www.informit.com/articles/article.aspx?p=1621865&seq
+                        </p>
+                        </section>
+                    <section>
+                        <h3>Practices</h3>
+                        <ul class="simple">
+                            <li class="fragment">Only build your binary
+                                once</li>
+                            <li class="fragment">Deploy the same way to every
+                                environment</li>
+                            <li class="fragment">Smoke-test your deployments</li>
+                            <li class="fragment">Deploy into a copy of production</li>
+                            <li class="fragment">Each change should propagate through the pipeline instantly</li>
+                            <li class="fragment">If any part of the pipeline fails, stop the line</li>
+                        </ul>
+                    </section>
+
+                    <section>
+                        <h3>Stages</h3>
+                        <ul class="simple">
+                            <li class="fragment">Commit</li>
+                            <li class="fragment">Automated acceptance
+                            tests</li>
+                            <li class="fragment">Manual testing</li>
+                            <li class="fragment">Release</li>
+                        </ul>
+                    </section>
+                </section>
+
+                <section>
+                    <h3>Continuous Deployment</h3>
+                </section>
+
+                <section>
+                    <h2>Benefits</h2>
+                </section>
+                <section>
+                    <h3>Product</h3>
+                    <ul class="simple">
+                        <li class="fragment">Quicker feedback on
+                            product</li>
+                        <li class="fragment">Massive risk reduction
+                            in Delivery Process</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h3>Team</h3>
+                    <ul class="simple">
+                        <li class="fragment">Empowering teams</li>
+                        <li class="fragment">Reducing errors</li>
+                        <li class="fragment">Lowering stress</li>
+                        <li class="fragment">Deployment Flexibility</li>
+                        <li class="fragment">Practice makes perfect</li>
+                        <li class="fragment">Visibility, measurability</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Challenges</h2>
+                </section>
+
+                <section>
+                    <h3>CI</h3>
+                    <p class="fragment">Feature Branches</p>
+                    <p class="fragment">Component</p>
+                </section>
+
+                <section>
+                    <h3>DevOps</h3>
+                </section>
+
+                <section>
+                    <h3>Database</h3>
+                </section>
+
+                <section>
+                    <h2>Where to start</h2>
+                </section>
+
+                <section>
+                    <h3>CI</h3>
+                    <ul class="simple">
+                        <li class="fragment">Automate build</li>
+                        <li class="fragment">Integrate daily</li>
+                        <li class="fragment">Tests</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h3>Automate almost everything</h3>
+                    <p class="fragment">Deployment</p>
+                    <p class="fragment">Infrastructure</p>
+                    <p class="fragment">Testing</p>
+                </section>
+
+                <section>
+                    <h3>Monitoring</h3>
+                </section>
+
+                <section>
+                    <h3>Reduce batch size</h3>
+                </section>
+
+                <section>
+                    <h3>Resilience</h3>
+                </section>
+
+                <section>
+                    <h2>Tools</h2>
+                </section>
+                <section>
+                    <h3>Requirements</h3>
+                    <ul class="simple">
+                        <li class="fragment">CI</li>
+                        <li class="fragment">Artifact repository</li>
+                        <li class="fragment">Stages & environments as
+                            1st class</li>
+                        <li class="fragment">Dashboard</li>
+                    </ul>
+                </section>
+                <section>
+                    <h3>Existing</h3>
+                    <p class="fragment">Jenkins</p>
+                    <p class="fragment">Go/Bamboo</p>
+                </section>
+
+                <section>
+                    <h2>Conclusion</h2>
+                    <p class="fragment">Raise your game!</p>
+                </section>
+
+                <section>
+                    <h2>References</h2>
+                </section>
+                <section>
+                    <h3>
+                    Continuous Delivery
+                        <span class="comment">Reliable Software Releases
+                        through Build, Test, and Deployment
+                            Automation</span></h3>
+                    <p><span  class="comment">Jez Humble & David
+                            Farley, 2010</span></p>
+                        <img src="img/CD-book.png"/>
+                </section>
+                <section>
+                    <h3>Anatomy of the Deployment Pipeline</h3>
+                    <p><span class="comment">Jez Humble</span></p>
+                    <p class="reference">
+                            http://www.informit.com/articles/article.aspx?p=1621865&seq</p>
+                </section>
+                <section>
+                    <h3>Web Operations
+                        <span class="comment">Keeping the data on
+                            time</span></h3>
+                        <p><span class="comment">John Allspaw & Jesse
+                            Robbins</span></p>
+                        <img src="img/wo.resized.jpg"/>
+                </section>
+                <section>
+                    <p>
+                        <a href="http://www.kitchensoap.com/">Kitchensoap</a>
+                        <span class="comment">John Allspaw</span>
+                    </p>
+                    <p>
+                        <a href="http://www.startuplessonslearned.com/2009/06/why-continuous-deployment.html">
+                            Startup Lessons Learned</a>
+                        <span class="comment">Eric Ries</span>
+                    </p>
+                </section>
+			</div>
+		</div>
+
+		<script src="lib/js/head.min.js"></script>
+		<script src="js/reveal.min.js"></script>
+
+		<script>
+
+			// Full list of configuration options available here:
+			// https://github.com/hakimel/reveal.js#configuration
+			Reveal.initialize({
+				controls: true,
+				progress: true,
+				history: true,
+
+				theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+				transition: Reveal.getQueryHash().transition || 'default', // default/cube/page/concave/linear(2d)
+
+				// Optional libraries used to extend on reveal.js
+				dependencies: [
+					{ src: 'lib/js/highlight.js', async: true, callback: function() { window.hljs.initHighlightingOnLoad(); } },
+					{ src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+					{ src: 'lib/js/showdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'lib/js/data-markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/zoom-js/zoom.js', condition: function() { return !!document.body.classList; } },
+					{ src: '/socket.io/socket.io.js', async: true, condition: function() { return window.location.host === 'localhost:1947'; } },
+					{ src: 'plugin/speakernotes/client.js', async: true, condition: function() { return window.location.host === 'localhost:1947'; } }
+				]
+			});
+
+		</script>
+
+	</body>
+</html>

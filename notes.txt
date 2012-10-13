@@ -1,0 +1,135 @@
+= The last mile
+
+Every change should trigger the feedback process
+Feedback received asap
+Delivery team must receive feedback and act on it
+
+= Lean
+
+== Cycle time
+
+Usually dev complete but app doesn't work well in integrated, production-like,
+realistic environment and load -> stress and long hours
+    Remove testing and integration phases that usually happen at the end
+        -> software always in a releasable state
+    Incremental development
+        -> focus on core functionality
+            Requires pushing to mainline every day
+
+= Deployment pipeline
+
+== Practices
+
+- Only build your binary once
+    - keep pipeline efficient
+    - only build upon sound foundations
+
+== Stages
+
+Commit: build + unit tests + code analysis
+Automated acceptance test: funtional and non-functional
+Manual test: exploratory, UAT
+Release: give to customer
+
+= Low risk software releases
+
+== Releasing incrementally
+
+Deploy components independently.
+Decouple DB upgrade from feature release
+Make rollbacks easy: don't delete data
+Expand/contract DB deployment - expand are run before, contract after. Expand
+is compatible with current versoin
+
+== Decoupling deployment from release
+
+ - Blue/Green deployment
+ - Canary testing
+ - Dark launches
+ - Feature toggles for A/B testing
+
+== Reducing batch size
+
+  - reduce cycle time
+  - prevent scope creep
+  - increase team motivation
+  - reduce risk
+    -> if it hurts, do it more often
+       - more practice
+       - working out what went wrong is easier due to smaller size of changes
+       - rolling back is easier
+    Rolling forward is the new rolling back
+
+== Building for resilience
+
+Being able to recover quickly from failure is more important than having
+failures more often.
+    -> Mean Time To Recovery over Mean Time Between Failures
+
+Chaos monkey
+People
+Remediation over rolling back
+
+
+= Value Proposition
+
+1. Quicker feedback on product
+2. Delivery process that massively reduces the risk
+
+3. Real sense of progress and meaning of done
+
+== Pillars
+
+1. Configuration management
+    - build, test, deploy automatically
+    - deploy and runtime config centrally managed
+    - automated configuration change to every env
+    - all development done on mainline, implementing large changes
+      incrementally. Incomplete features hidden
+
+    Also requires great cooperation between dev and ops.
+
+2. Agile testing
+    - automate at every level: unit, integration, acceptance, performance
+        -> if tests pass, software is releasable
+    - testing build into the delivery process
+
+3. Deployment pipeline
+    - model of delivery process, i.e. part of value stream from check in to
+      release
+    - extension of CI to the testing and operations teams
+    - enforce delivery workflow
+    - used to audit and improve delivery process
+
+
+Main metric: Cycle time, i.e. delay between deciding to implement and idea and
+having software available to users.
+
+Implemented incrementally. Find bottlenecks and solve them - theory of
+constraints, kanban
+
+= Core practices
+
+1. Start with Minimum Viable Product
+    - if you're not embarassed with version 1, you launched too late
+2. Measure the value of features
+    - metrics are part of your product
+    - lean's 'validated learning': gather actionable metrics based on real
+      usage
+    - validated as criteria for done
+3. Just enoug up-front analysis
+4. Do less
+    - If you find yourself running out of room on the cards, use smaller cards
+5. Include feature toggles
+
+= Conclusion
+
+ - Constantly reflect
+
+= 5 steps
+
+CI server
+Commit check
+Simple deployment script
+Real-time alerting
+Root cause analysis (5 whys)
